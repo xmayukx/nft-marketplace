@@ -1,4 +1,3 @@
-"use client";
 import "@/styles/globals.css";
 import { Metadata } from "next";
 import { siteConfig } from "@/config/site";
@@ -6,7 +5,6 @@ import { fontSans } from "@/config/fonts";
 import { Providers } from "./providers";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
-import { ThirdwebProvider, metamaskWallet } from "@thirdweb-dev/react";
 
 export const metadata: Metadata = {
   title: {
@@ -41,15 +39,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
-            <main className="">
-              <ThirdwebProvider
-                supportedWallets={[metamaskWallet()]}
-                activeChain="ethereum"
-                clientId="your-client-id"
-              >
-                {children}
-              </ThirdwebProvider>
-            </main>
+            <main className="">{children}</main>
           </div>
         </Providers>
       </body>

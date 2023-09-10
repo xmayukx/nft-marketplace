@@ -5,7 +5,7 @@ export default function page({ id }: { id: string }) {
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const disconnect = useDisconnect();
-  console.log(address);
+  // console.log(address);
   return (
     <div>
       <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
@@ -65,7 +65,7 @@ export default function page({ id }: { id: string }) {
               APE CLUB
             </h1>
             <p className="pt-2 text-xl text-green-500 pb-2">
-              13 / 21 NFT's claimed
+              13 / 21 NFT&apos;s claimed
             </p>
           </div>
           {/* Mint */}

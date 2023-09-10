@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
@@ -13,7 +14,15 @@ export interface ProvidersProps {
 export function Providers({ children, themeProps }: ProvidersProps) {
   return (
     <NextUIProvider>
-      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      <NextThemesProvider {...themeProps}>
+        <ThirdwebProvider
+          supportedWallets={[metamaskWallet()]}
+          activeChain="ethereum"
+          clientId="your-client-id"
+        >
+          {children}
+        </ThirdwebProvider>
+      </NextThemesProvider>
     </NextUIProvider>
   );
 }
