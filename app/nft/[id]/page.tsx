@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
-export default function page({ id }: { id: string }) {
+export default function Page({ id }: { id: string }) {
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const disconnect = useDisconnect();
