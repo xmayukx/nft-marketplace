@@ -2,11 +2,7 @@
 import React from "react";
 import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
 
-type Params = {
-  id: string;
-};
-
-export default function Page({ props }: { props: Params }) {
+export default function Page({ params }: { params: { id: string } }) {
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const disconnect = useDisconnect();
