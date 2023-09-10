@@ -16,6 +16,10 @@ export const siteConfig = {
       label: "Blog",
       href: "/blog",
     },
+    {
+      label: "NFTs",
+      href: "/nft",
+    },
   ],
   navMenuItems: [
     {
