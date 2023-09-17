@@ -2,10 +2,9 @@ import { GetServerSideProps } from "next";
 import { sanityClient } from "../sanity/lib/client";
 import { Collection } from "../types/typings";
 
-interface Props {
-  collections: Collection[];
-}
-export default function Home({ collections }: Props) {
+export default async function Home() {
+  const collections = await getData();
+  console.log(collections);
   return (
     <>
       <header>
@@ -18,11 +17,13 @@ export default function Home({ collections }: Props) {
           NFT Market Place
         </h1>
       </header>
-      <section className=""></section>
+      <section className="">
+        {collections?.map((collection: Collection) => {})}
+      </section>
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getData = async () => {
   const query = `*[_type=="collection"]{
     _id,
     title,
@@ -49,9 +50,5 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }`;
   const collections = await sanityClient.fetch(query);
   console.log(collections);
-  return {
-    props: {
-      collections,
-    },
-  };
+  return collections;
 };
