@@ -22,8 +22,7 @@ export default function Home({ collections }: Props) {
     </>
   );
 }
-
-export const getserversideprops: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const query = `*[_type=="collection"]{
     _id,
     title,
