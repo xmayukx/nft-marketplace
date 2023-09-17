@@ -23,7 +23,7 @@ export default async function Home() {
     </>
   );
 }
-export const getData = async () => {
+const getData = async () => {
   const query = `*[_type=="collection"]{
     _id,
     title,
@@ -48,7 +48,9 @@ export const getData = async () => {
       },
     },
   }`;
-  const collections = await sanityClient.fetch(query);
+  const collections = await sanityClient.fetch(query).catch((err) => {
+    console.log(err.message);
+  });
   console.log(collections);
   return collections;
 };
