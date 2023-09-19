@@ -6,7 +6,7 @@ import { urlForImage } from "@/sanity/lib/image";
 
 const Cardo = ({ collection }: { collection: Collection }) => {
   return (
-    <Card className="py-4 shadow-none border border-spacing-5 border-slate-800">
+    <Card className="py-4 shadow-none border-2 border-spacing-5 border-slate-800 hover:border-green-800 focus:border-green-500">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
         <p className="text-tiny uppercase font-bold">{collection.title}</p>
         <small className="text-default-500">{collection.description}</small>

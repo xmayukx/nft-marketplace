@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
 import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
+import { sanityClient } from "@/sanity/lib/client";
+import { Collection } from "@/types/typings";
+import { notFound } from "next/navigation";
 
-export default function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const disconnect = useDisconnect();
-
-  // console.log(address);
+  const { collections } = await getData(params?.id);
   return (
     <div>
       <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
@@ -80,3 +82,40 @@ export default function Page({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
+async function getData(id: string) {
+  const query = `*[_type=="collection" && slug.current == $id][0]{
+    _id,
+    title,
+    address,
+    description,
+    nftCollectionName,
+    mainImage {
+      asset
+    },
+    previewImage {
+      asset
+    },
+    slug {
+      current,
+    },
+    creator-> {
+      _id,
+      name,
+      address,
+      slug {
+      current
+      },
+    },
+  }`;
+
+  const collections: Collection = await sanityClient.fetch(query, { id: id });
+  if (collections === null) {
+    notFound();
+  }
+  return {
+    collections,
+  };
+}
+
+// export const dynamicParams = false;
