@@ -16,7 +16,7 @@ export default async function Home() {
           NFT Market Place
         </h1>
       </header>
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 m-10 bg-emerald-950 p-10 rounded-xl">
+      <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 m-10 bg-emerald-950 p-10 rounded-xl gap-2">
         {collections?.map((collection: Collection, key: number) => {
           return <Cardo key={key} collection={collection} />;
         })}
