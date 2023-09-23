@@ -3,11 +3,14 @@ import { Collection } from "@/types/typings";
 import { notFound } from "next/navigation";
 import Button, { Status } from "@/components/button";
 import { sanityClient } from "@/sanity/lib/client";
+import { urlForImage } from "@/sanity/lib/image";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const collection = await getData(params?.id);
   if (!collection) {
     notFound();
+  } else {
+    console.log(collection);
   }
   return (
     <div>
@@ -18,14 +21,16 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className="bg-gradient-to-br from-yellow-400 to-purple-600 p-2 rounded-xl">
               <img
                 className=" w-60 lg:h-96 lg:w-72 rounded-lg object-cover"
-                src="https://blockworks-co.imgix.net/wp-content/uploads/2022/01/Bored-Ape-Yacht-Club_Ape_wide.jpg"
+                src={urlForImage(collection?.previewImage?.asset).url()}
                 alt=""
               />
             </div>
-            <h1 className="text-4xl text-gray-300 font-bold">NOTROX Apes</h1>
+            <h1 className="text-4xl text-gray-300 font-bold">
+              {collection?.nftCollectionName}
+            </h1>
             <h2 className=" text-xl text-gray-300">
               {" "}
-              A collection of NOTROX Apes who eat bitcoin cookies
+              {collection?.description}
             </h2>
           </div>
         </div>
@@ -49,11 +54,11 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="mt-10 flex flex-1 flex-col items-center space-x-6 text-center lg:space-y-0 lg:justify-center">
             <img
               className="w-80 object-cover pb-10 lg:h-40"
-              src="https://www.artnews.com/wp-content/uploads/2021/09/Apes-Collage.jpg"
+              src={urlForImage(collection?.mainImage?.asset).url()}
               alt="ape"
             />
             <h1 className=" text-3xl font-bold lg:text-5xl lg:font-extrabold">
-              APE CLUB
+              {collection?.title ? collection?.title : "NOTROX Apes"}
             </h1>
             <p className="pt-2 text-xl text-green-500 pb-2">
               13 / 21 NFT&apos;s claimed
@@ -69,7 +74,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     </div>
   );
 }
-const getData = cache(async (id: string) => {
+const getData = async (id: string) => {
   const query = `*[_type=="collection" && slug.current == $id][0]{ 
     _id,
     title,
@@ -97,12 +102,4 @@ const getData = cache(async (id: string) => {
 
   const collections: Collection = await sanityClient.fetch(query, { id: id });
   return collections;
-});
-
-// export const dynamicParams = true;
-// export const dynamic = "auto";
-
-// export const revalidate = false;
-// export const fetchCache = "auto";
-// export const runtime = "nodejs";
-// export const preferredRegion = "auto";
+};
