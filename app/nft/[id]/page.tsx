@@ -1,15 +1,14 @@
-"use client";
-import React from "react";
-import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
-import { sanityClient } from "@/sanity/lib/client";
+import React, { cache } from "react";
 import { Collection } from "@/types/typings";
 import { notFound } from "next/navigation";
+import Button, { Status } from "@/components/button";
+import { sanityClient } from "@/sanity/lib/client";
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const connectWithMetamask = useMetamask();
-  const address = useAddress();
-  const disconnect = useDisconnect();
-  const { collections } = await getData(params?.id);
+  const collection = await getData(params?.id);
+  if (!collection) {
+    notFound();
+  }
   return (
     <div>
       <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
@@ -23,7 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 alt=""
               />
             </div>
-            <h1 className=" text-4xl text-gray-300 font-bold">NOTROX Apes</h1>
+            <h1 className="text-4xl text-gray-300 font-bold">NOTROX Apes</h1>
             <h2 className=" text-xl text-gray-300">
               {" "}
               A collection of NOTROX Apes who eat bitcoin cookies
@@ -42,22 +41,10 @@ export default async function Page({ params }: { params: { id: string } }) {
               </span>{" "}
               NFT Market Place
             </h1>
-            <button
-              onClick={() => (address ? disconnect() : connectWithMetamask())}
-              className="rounded-full bg-green-200 px-4 py-2 text-xs font-bold text-green-700 lg:px-5 lg:py-3"
-            >
-              {address ? "Sign Out" : "Connect Wallet"}
-            </button>
+            <Button />
           </div>
           <hr className="my-2 border" />
-          {address && (
-            <p className="text-green-500 text-base text-center">
-              {"Connected with " +
-                address.substring(0, 5) +
-                "..." +
-                address.substring(address.length - 5)}
-            </p>
-          )}
+          <Status />
           {/* content */}
           <div className="mt-10 flex flex-1 flex-col items-center space-x-6 text-center lg:space-y-0 lg:justify-center">
             <img
@@ -82,9 +69,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     </div>
   );
 }
-
-async function getData(id: string) {
-  const query = `*[_type=="collection" && slug.current == $id][0]{
+const getData = cache(async (id: string) => {
+  const query = `*[_type=="collection" && slug.current == $id][0]{ 
     _id,
     title,
     address,
@@ -110,12 +96,13 @@ async function getData(id: string) {
   }`;
 
   const collections: Collection = await sanityClient.fetch(query, { id: id });
-  if (collections === null) {
-    notFound();
-  }
-  return {
-    collections,
-  };
-}
+  return collections;
+});
 
-// export const dynamicParams = false;
+// export const dynamicParams = true;
+// export const dynamic = "auto";
+
+// export const revalidate = false;
+// export const fetchCache = "auto";
+// export const runtime = "nodejs";
+// export const preferredRegion = "auto";
