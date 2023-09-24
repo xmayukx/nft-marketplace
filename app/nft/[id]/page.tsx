@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               alt="ape"
             />
             <h1 className=" text-3xl font-bold lg:text-5xl lg:font-extrabold">
-              {collection?.title ? collection?.title : "NOTROX Apes"}
+              {collection?.title ? collection.title : "NOTROX Apes"}
             </h1>
             <p className="pt-2 text-xl text-green-500 pb-2">
               13 / 21 NFT&apos;s claimed
