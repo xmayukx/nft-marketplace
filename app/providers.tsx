@@ -17,8 +17,8 @@ export function Providers({ children, themeProps }: ProvidersProps) {
       <NextThemesProvider {...themeProps}>
         <ThirdwebProvider
           supportedWallets={[metamaskWallet()]}
-          activeChain="ethereum"
-          clientId="your-client-id"
+          activeChain="fantom-testnet" 
+          clientId={process.env.THIRDWEB_CLIENT_ID}
         >
           {children}
         </ThirdwebProvider>
