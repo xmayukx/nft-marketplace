@@ -10,7 +10,7 @@ import {
 import { Button } from "@nextui-org/button";
 const Status = ({ ...props }) => {
   const { collection } = props;
-  console.log(collection.address);
+  // console.log(collection.address);
   const [claimedSupply, setClaimedSupply] = useState<number>(0);
   const [totalSupply, setTotalSupply] = useState<BigNumber>();
   const address = useAddress();
