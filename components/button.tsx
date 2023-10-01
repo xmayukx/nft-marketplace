@@ -1,11 +1,12 @@
 "use client";
-import React, { cache } from "react";
+import React, { useEffect } from "react";
 import { useAddress, useDisconnect, useMetamask } from "@thirdweb-dev/react";
 
 const Button = ({ ...props }) => {
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const disconnect = useDisconnect();
+
   return (
     <button
       onClick={() => (address ? disconnect() : connectWithMetamask())}
@@ -17,20 +18,4 @@ const Button = ({ ...props }) => {
   );
 };
 
-// export { useAddress };
-export const Status = () => {
-  const address = useAddress();
-  return (
-    <>
-      {address && (
-        <p className="text-green-500 text-base text-center">
-          {"Connected with " +
-            address.substring(0, 5) +
-            "..." +
-            address.substring(address.length - 5)}
-        </p>
-      )}
-    </>
-  );
-};
 export default Button;
