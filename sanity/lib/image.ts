@@ -5,7 +5,7 @@ import { dataset, projectId } from "../env";
 
 const imageBuilder = createImageUrlBuilder({
   projectId: projectId,
-  dataset: dataset,
+  dataset: dataset || "production",
 });
 
 export const urlForImage = (source: Image) => {

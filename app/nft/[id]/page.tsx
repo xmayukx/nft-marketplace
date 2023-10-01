@@ -1,9 +1,12 @@
 import React, { cache } from "react";
 import { Collection } from "@/types/typings";
 import { notFound } from "next/navigation";
-import Button, { Status } from "@/components/button";
+import Button from "@/components/button";
 import { sanityClient } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
+import Link from "next/link";
+import Status from "@/components/status";
+import WalletStatus from "@/components/walletStatus";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const collection = await getData(params?.id);
@@ -38,18 +41,21 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="flex flex-col p-10 lg:col-span-6">
           {/* header */}
           <div className="flex items-center justify-between p-5">
-            <h1 className="cursor-pointer w-52 text-xl font-extralight sm:w-80">
-              {" "}
-              The{" "}
-              <span className=" font-extrabold underline decoration-green-600">
-                NOTROX
-              </span>{" "}
-              NFT Market Place
-            </h1>
-            <Button />
+            <Link href={"/"}>
+              <h1 className="cursor-pointer w-52 text-xl font-extralight sm:w-80">
+                {" "}
+                The{" "}
+                <span className=" font-extrabold underline decoration-green-600">
+                  NOTROX
+                </span>{" "}
+                NFT Market Place
+              </h1>
+            </Link>
+
+            <Button collection={collection} />
           </div>
           <hr className="my-2 border" />
-          <Status />
+          <WalletStatus />
           {/* content */}
           <div className="mt-10 flex flex-1 flex-col items-center space-x-6 text-center lg:space-y-0 lg:justify-center">
             <img
@@ -60,9 +66,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <h1 className=" text-3xl font-bold lg:text-5xl lg:font-extrabold">
               {collection?.title ? collection.title : "NOTROX Apes"}
             </h1>
-            <p className="pt-2 text-xl text-green-500 pb-2">
-              13 / 21 NFT&apos;s claimed
-            </p>
+            <Status collection={collection} />
           </div>
           {/* Mint */}
           <button className=" font-bold h-16 bg-red-600 rounded-full text-white">
