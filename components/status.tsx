@@ -15,7 +15,7 @@ const Status = ({ ...props }) => {
   const [totalSupply, setTotalSupply] = useState<BigNumber>();
   const address = useAddress();
   const isConnected = !!address;
-  const { contract, isLoading, error, failureCount } = useContract(
+  const { contract, isLoading, error } = useContract(
     collection.address,
     "nft-drop",
   );

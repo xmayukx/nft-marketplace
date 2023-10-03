@@ -1,4 +1,4 @@
-import React, { cache } from "react";
+import React from "react";
 import { Collection } from "@/types/typings";
 import { notFound } from "next/navigation";
 import Button from "@/components/button";
@@ -7,6 +7,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import Link from "next/link";
 import Status from "@/components/status";
 import WalletStatus from "@/components/walletStatus";
+import Mint from "@/components/mint";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const collection = await getData(params?.id);
@@ -69,10 +70,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <Status collection={collection} />
           </div>
           {/* Mint */}
-          <button className=" font-bold h-16 bg-red-600 rounded-full text-white">
-            {" "}
-            Mint NFT (0.01 ETH){" "}
-          </button>
+          <Mint collection={collection} />
         </div>
       </div>
     </div>
