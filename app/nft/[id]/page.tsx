@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               </h1>
             </Link>
 
-            <Button collection={collection} />
+            <Button />
           </div>
           <hr className="my-2 border" />
           <WalletStatus />
